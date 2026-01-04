@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Kelas Elite - Full Structure</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+*{box-sizing:border-box; font-family: 'Poppins', sans-serif;}
+
+body{
+    margin:0;
+    background: radial-gradient(circle at top, #1a1a1a, #000);
+    color:#fff;
+    min-height: 100vh;
+}
+
+/* ===== LOADING ANIMATION ===== */
+.loader {
+    border: 3px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    border-top: 3px solid #00e5ff;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* ===== LOGIN PAGE ===== */
+#loginPage{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding: 20px;
+}
+.login-box{
+    background: rgba(255, 255, 255, 0.05);
+    padding: 40px 30px;
+    border-radius: 24px;
+    width: 100%;
+    max-width: 400px;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(0,255,255,0.2);
+    box-shadow: 0 0 50px rgba(0,255,255,0.1);
+    text-align: center;
+}
+.login-box h2 { margin-bottom: 25px; color: #00e5ff; letter-spacing: 2px; }
+.login-box input{
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(0,0,0,0.4);
+    color: #fff;
+    outline: none;
+}
+.login-box button{
+    width: 100%;
+    padding: 14px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #00e5ff, #008ba3);
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.login-box button:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,255,255,0.4); }
+.link { margin-top: 20px; font-size: 14px; color: #00e5ff; cursor: pointer; text-decoration: underline; }
+
+/* ===== MAIN PAGE ===== */
+#kelasPage { animation: fadeIn 1s ease-out; }
+header { padding: 60px 20px; text-align: center; }
+header h1 { font-size: 2.5rem; letter-spacing: 5px; color: #fff; text-shadow: 0 0 20px rgba(0,229,255,0.5); margin: 0; }
+
+.section-title { text-align: center; margin: 50px 0 25px; color: #00e5ff; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 20px;
+    padding: 0 25px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Member Card Styling */
+.member-link { text-decoration: none; color: inherit; display: block; }
+.card {
+    background: rgba(255,255,255,0.03);
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: 0.4s;
+    height: 100%;
+}
+.card:hover { 
+    border-color: #00e5ff; 
+    transform: translateY(-8px); 
+    background: rgba(0, 229, 255, 0.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+.card img { 
+    width: 90px; height: 90px; border-radius: 50%; border: 3px solid #00e5ff; 
+    margin-bottom: 12px; object-fit: cover; transition: 0.3s;
+}
+.card:hover img { transform: scale(1.1); box-shadow: 0 0 15px #00e5ff; }
+.card h4 { margin: 5px 0; font-size: 15px; color: #fff; }
+.card .role { color: #00e5ff; font-size: 11px; font-weight: bold; display: block; margin-bottom: 8px; }
+.card .motto { color: #bbb; font-size: 11px; font-style: italic; display: block; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 8px; }
+
+footer { padding: 60px; text-align: center; }
+footer a { color: #fff; font-size: 28px; margin: 0 15px; transition: 0.3s; }
+footer a:hover { color: #00e5ff; }
+
+.hidden { display: none !important; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+@media (max-width: 480px) {
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+}
+</style>
+</head>
+<body>
+
+<audio id="bgMusic" loop>
+    <source src="https://files.catbox.moe/9flw9y.mp3" type="audio/mpeg">
+</audio>
+
+<div id="loginPage">
+    <div class="login-box">
+        <div id="loginForm">
+            <h2>LOGIN ELITE</h2>
+            <input type="text" id="userIn" placeholder="Username">
+            <input type="password" id="passIn" placeholder="Password">
+            <button id="btnLogin" onclick="handleLogin()">MASUK</button>
+            <p class="link" onclick="switchAuth(true)">Daftar Akun Baru</p>
+        </div>
+
+        <div id="registerForm" class="hidden">
+            <h2>DAFTAR</h2>
+            <input type="text" id="regUser" placeholder="Username Baru">
+            <input type="password" id="regPass" placeholder="Password Baru">
+            <button id="btnReg" onclick="handleRegister()">DAFTAR SEKARANG</button>
+            <p class="link" onclick="switchAuth(false)">Sudah punya akun? Login</p>
+        </div>
+    </div>
+</div>
+
+<div id="kelasPage" class="hidden">
+    <header>
+        <h1>KELAS 2_____-</h1>
+        <p>Solid • Loyal • Berprestasi</p>
+    </header>
+
+    <div class="section-title">STRUKTUR KELAS</div>
+    <div class="grid">
+        <a href="https://instagram.com/ig_kosma" target="_blank" class="member-link">
+            <div class="card">
+                <img src="https://via.placeholder.com/150">
+                <h4>KOSMA</h4>
+                <span class="role">Ketua Kelas</span>
+                <span class="motto">"Misi: Membawa kelas menjadi yang terbaik."</span>
+            </div>
+        </a>
+        <a href="https://instagram.com/ig_wakosma" target="_blank" class="member-link">
+            <div class="card">
+                <img src="https://via.placeholder.com/150">
+                <h4>WAKOSMA</h4>
+                <span class="role">Wakil Ketua</span>
+                <span class="motto">"Selalu siap membantu kapan saja."</span>
+            </div>
+        </a>
+        <a href="https://instagram.com/ig_sekre1" target="_blank" class="member-link">
+            <div class="card">
+                <img src="https://via.placeholder.com/150">
+                <h4>SEKRETARIS 1</h4>
+                <span class="role">Administrasi</span>
+                <span class="motto">"Rapi dalam data, disiplin dalam waktu."</span>
+            </div>
+        </a>
+        <a href="https://instagram.com/ig_sekre2" target="_blank" class="member-link">
+            <div class="card">
+                <img src="https://via.placeholder.com/150">
+                <h4>SEKRETARIS 2</h4>
+                <span class="role">Administrasi</span>
+                <span class="motto">"Mendukung pendataan kelas yang akurat."</span>
+            </div>
+        </a>
+        <a href="https://instagram.com/ig_bendahara1" target="_blank" class="member-link">
+            <div class="card">
+                <img src="https://via.placeholder.com/150">
+                <h4>BENDAHARA 1</h4>
+                <span class="role">Keuangan</span>
+                <span class="motto">"Uang kas aman, kelas tenang."</span>
+            </div>
+        </a>
+        <a href="https://instagram.com/ig_bendahara2" target="_blank" class="member-link">
+            <div class="card">
+                <img src="https://via.placeholder.com/150">
+                <h4>BENDAHARA 2</h4>
+                <span class="role">Keuangan</span>
+                <span class="motto">"Transparansi keuangan adalah prioritas."</span>
+            </div>
+        </a>
+    </div>
+
+    <div class="section-title">ANGGOTA ELITE (29)</div>
+    <div class="grid">
+        <a href="https://instagram.com/ig_user" target="_blank" class="member-link"><div class="card"><img src="https://via.placeholder.com/150"><h4>Anggota 1</h4><span class="role">Elite Member</span><span class="motto">"Misi: Menjadi pribadi yang bermanfaat."</span></div></a>
+        <a href="https://instagram.com/ig_user" target="_blank" class="member-link"><div class="card"><img src="https://via.placeholder.com/150"><h4>Anggota 2</h4><span class="role">Elite Member</span><span class="motto">"Misi: Sukses di masa depan."</span></div></a>
+        <a href="https://instagram.com/ig_user" target="_blank" class="member-link"><div class="card"><img src="https://via.placeholder.com/150"><h4>Anggota 3</h4><span class="role">Elite Member</span><span class="motto">"Motto: Tetap semangat!"</span></div></a>
+        <a href="https://instagram.com/ig_user" target="_blank" class="member-link"><div class="card"><img src="https://via.placeholder.com/150"><h4>Anggota 4</h4><span class="role">Elite Member</span><span class="motto">"Motto: Pantang menyerah."</span></div></a>
+        <a href="https://instagram.com/ig_user" target="_blank" class="member-link"><div class="card"><img src="https://via.placeholder.com/150"><h4>Anggota 5</h4><span class="role">Elite Member</span><span class="motto">"Misi: Belajar hal baru."</span></div></a>
+        <a href="https://instagram.com/ig_user" target="_blank" class="member-link"><div class="card"><img src="https://via.placeholder.com/150"><h4>Anggota 6</h4><span class="role">Elite Member</span><span class="motto">"Misi: Membanggakan orang tua."</span></div></a>
+        <a href="https://instagram.com/ig_user" target="_blank" class="member-link"><div class="card"><img src="https://via.placeholder.com/150"><h4>Anggota 7</h4><span class="role">Elite Member</span><span class="motto">"Motto: Stay positive."</span></div></a>
+        <a href="https://instagram.com/ig_user" target="_blank" class="member-link"><div class="card"><img src="https://via.placeholder.com/150"><h4>Anggota 8</h4><span class="role">Elite Member</span><span class="motto">"Motto: Work hard, play hard."</span></div></a>
+        <a href="https://instagram.com/ig_user" target="_blank" class="member-link"><div class="card"><img src="https://via.placeholder.com/150"><h4>Anggota 9</h4><span class="role">Elite Member</span><span class="motto">"Misi: Juara kelas."</span></div></a>
+        <a href="https://instagram.com/ig_user" target="_blank" class="member-link"><div class="card"><img src="https://via.placeholder.com/150"><h4>Anggota 10</h4><span class="role">Elite Member</span><span class="motto">"Misi: Menjadi ahli IT."</span></div></a>
+        <a href="https://instagram.com/ig_user" target="_blank" class="member-link"><div class="card"><img src="https://via.placeholder.com/150"><h4>Anggota 11</h4><span class="role">Elite Member</span><span class="motto">"Motto: Hidup adalah perjuangan."</span></div></a>
+        <a href="https://instagram.com/ig_user" target="_blank" class="member-link"><div class="card"><img src="https://via.placeholder.com/150"><h4>Anggota 12</h4><span class="role">Elite Member</span><span class="motto">"Motto: Fokus pada tujuan."</span></div></a>
+        <a href="https://instagram.com/ig_user" target="_blank" class="member-link"><div class="card"><img src="https://via.placeholder.com/150"><h4>Anggota 13</h4><span class="role">Elite Member</span><span class="motto">"Misi: Mengelilingi dunia."</span></div></a>
+        <a href="https://instagram.com/ig_user" target="_blank" class="member-link"><div class="card"><img src="https://via.placeholder.com/150"><h4>Anggota 14</h4><span class="role">Elite Member</span><span class="motto">"Misi: Bahagia dunia akhirat."</span></div></a>
+        <a href="https://instagram.com/ig_user" target="_blank" class="member-link"><div class="card"><img src="https://via.placeholder.com/150"><h4>Anggota 15</h4><span class="role">Elite Member</span><span class="motto">"Motto: Sabar itu indah."</span></div></a>
+        <a href="https://instagram.com/ig_user" target="_blank" class="member-link"><div class="card"><img src="https://via.placeholder.com/150"><h4>Anggota 16</h4><span class="role">Elite Member</span><span class="motto">"Motto: Be yourself."</span></div></a>
+        <a href="https://instagram.com/ig_user" target="_blank" class="member-link"><div class="card"><img src="https://via.placeholder.com/150"><h4>Anggota 17</h4><span class="role">Elite Member</span><span class="motto">"Misi: Sukses muda."</span></div></a>
+        <a href="https://instagram.com/ig_user" target="_blank" class="member-link"><div class="card"><img src="https://via.placeholder.com/150"><h4>Anggota 18</h4><span class="role">Elite Member</span><span class="motto">"Misi: Disiplin waktu."</span></div></a>
+        <a href="https://instagram.com/ig_user" target="_blank" class="member-link"><div class="card"><img src="https://via.placeholder.com/150"><h4>Anggota 19</h4><span class="role">Elite Member</span><span class="motto">"Motto: Terus belajar."</span></div></a>
+        <a href="https://instagram.com/ig_user" target="_blank" class="member-link"><div class="card"><img src="https://via.placeholder.com/150"><h4>Anggota 20</h4><span class="role">Elite Member</span><span class="motto">"Motto: Raih mimpimu."</span></div></a>
+        <a href="https://instagram.com/ig_user" target="_blank" class="member-link"><div class="card"><img src="https://via.placeholder.com/150"><h4>Anggota 21</h4><span class="role">Elite Member</span><span class="motto">"Misi: Berguna bagi sesama."</span></div></a>
+        <a href="https://instagram.com/ig_user" target="_blank" class="member-link"><div class="card"><img src="https://via.placeholder.com/150"><h4>Anggota 22</h4><span class="role">Elite Member</span><span class="motto">"Misi: Jadi orang hebat."</span></div></a>
+        <a href="https://instagram.com/ig_user" target="_blank" class="member-link"><div class="card"><img src="https://via.placeholder.com/150"><h4>Anggota 23</h4><span class="role">Elite Member</span><span class="motto">"Motto: Do your best."</span></div></a>
+        <a href="https://instagram.com/ig_user" target="_blank" class="member-link"><div class="card"><img src="https://via.placeholder.com/150"><h4>Anggota 24</h4><span class="role">Elite Member</span><span class="motto">"Motto: Bersyukur selalu."</span></div></a>
+        <a href="https://instagram.com/ig_user" target="_blank" class="member-link"><div class="card"><img src="https://via.placeholder.com/150"><h4>Anggota 25</h4><span class="role">Elite Member</span><span class="motto">"Misi: Penulis handal."</span></div></a>
+        <a href="https://instagram.com/ig_user" target="_blank" class="member-link"><div class="card"><img src="https://via.placeholder.com/150"><h4>Anggota 26</h4><span class="role">Elite Member</span><span class="motto">"Misi: Pebisnis sukses."</span></div></a>
+        <a href="https://instagram.com/ig_user" target="_blank" class="member-link"><div class="card"><img src="https://via.placeholder.com/150"><h4>Anggota 27</h4><span class="role">Elite Member</span><span class="motto">"Motto: Dream big."</span></div></a>
+        <a href="https://instagram.com/ig_user" target="_blank" class="member-link"><div class="card"><img src="https://via.placeholder.com/150"><h4>Anggota 28</h4><span class="role">Elite Member</span><span class="motto">"Motto: Just do it."</span></div></a>
+        <a href="https://instagram.com/ig_user" target="_blank" class="member-link"><div class="card"><img src="https://via.placeholder.com/150"><h4>Anggota 29</h4><span class="role">Elite Member</span><span class="motto">"Misi: Lulus tepat waktu."</span></div></a>
+    </div>
+
+    <footer>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-tiktok"></i></a>
+    </footer>
+</div>
+
+<script>
+const bgMusic = document.getElementById('bgMusic');
+
+function switchAuth(isRegister) {
+    document.getElementById('loginForm').classList.toggle('hidden', isRegister);
+    document.getElementById('registerForm').classList.toggle('hidden', !isRegister);
+}
+
+function handleRegister() {
+    const u = document.getElementById('regUser').value.trim();
+    const p = document.getElementById('regPass').value;
+    const btn = document.getElementById('btnReg');
+
+    if(!u || !p) return alert("Lengkapi data!");
+
+    btn.disabled = true;
+    btn.innerHTML = '<span class="loader"></span> Mendaftarkan...';
+
+    setTimeout(() => {
+        localStorage.setItem("user_" + u, p);
+        alert("Akun Berhasil Dibuat! Silakan Login.");
+        btn.disabled = false;
+        btn.innerHTML = 'DAFTAR SEKARANG';
+        switchAuth(false);
+    }, 1500);
+}
+
+function handleLogin() {
+    const u = document.getElementById('userIn').value.trim();
+    const p = document.getElementById('passIn').value;
+    const btn = document.getElementById('btnLogin');
+    const savedPass = localStorage.getItem("user_" + u);
+
+    if(savedPass && savedPass === p) {
+        btn.disabled = true;
+        btn.innerHTML = '<span class="loader"></span> Membuka Gerbang...';
+
+        setTimeout(() => {
+            document.getElementById('loginPage').classList.add('hidden');
+            document.getElementById('kelasPage').classList.remove('hidden');
+            bgMusic.play();
+        }, 1200);
+    } else {
+        alert("Username atau Password salah!");
+    }
+}
+</script>
+
+</body>
+</html>
